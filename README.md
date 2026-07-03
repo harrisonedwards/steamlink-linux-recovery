@@ -18,19 +18,25 @@ Once it flashes green, you just tap **Exit**, reopen Steam Link, and reconnect. 
 ---
 ⚠️ **Systemd Heads-Up:** Running the installer hooks a lightweight, user-level background daemon (`systemd --user`) on your machine that listens locally on port `8082`. It requires **zero root/sudo permissions**, but if you don't want a persistent background task running, skip the installer and just bind a keyboard hotkey directly to `bin/reset-vr`.
 
-## Installation
+
+## Installation & Setup
 
 1. Clone the repository to your local Linux machine:
+
 ```bash
-git clone [https://github.com/yourusername/steamlink-linux-recovery.git](https://www.google.com/search?q=https://github.com/yourusername/steamlink-linux-recovery.git)
+git clone  https://github.com/harrisonedwards/steamlink-linux-recovery.git
 cd steamlink-linux-recovery
 ```
-2. Execute the included script installation binary:
+
+2. Run the installer script to deploy the daemon:
+
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
-3. Verify that the background user execution daemon is active and green:
+
+3. Verify that the user-level background service is active and green:
+
 ```bash
 systemctl --user status vr-trigger.service
 ```
@@ -42,7 +48,7 @@ systemctl --user status vr-trigger.service
 ```
 http://<YOUR_DETECTED_IP>:8082/reset
 ```
-3. Once the stylized verification screen displays, open the browser options and select **Add page to library**.
+3. Once the verification screen displays, open the browser options and select **Add page to library**.
 4. Drag and drop the newly created app icon directly onto your universal bottom navigation dock for instant access.
 
 
