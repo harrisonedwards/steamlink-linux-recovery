@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Forcefully clear stuck Steam Link and SteamVR processes on Linux
+PROCS=(vrserver vrmonitor vrcompositor vrwebhelper vrstartup vrdashboard vrcompositor-launcher)
+
+echo "Hunting zombie VR processes..."
+for p in "${PROCS[@]}"; do
+    pkill -9 -x "$p" 2>/dev/null || true
+done
+
+pkill -9 -f 'SteamVR/bin/vrstartup.sh' 2>/dev/null || true
+echo "VR environment successfully cleared."

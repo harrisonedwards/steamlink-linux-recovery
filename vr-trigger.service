@@ -1,0 +1,10 @@
+[Unit]
+Description=Quest VR Trigger Link Web Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 %h/.local/bin/vr-web-trigger.py
+Restart=always
+
+[Install]
+WantedBy=default.target
