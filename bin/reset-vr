@@ -1,11 +1,15 @@
-#!/usr/bin/env bash
-# Forcefully clear stuck Steam Link and SteamVR processes on Linux
-PROCS=(vrserver vrmonitor vrcompositor vrwebhelper vrstartup vrdashboard vrcompositor-launcher)
+#!/bin/bash
 
+# 1. Clear out the zombies
 echo "Hunting zombie VR processes..."
-for p in "${PROCS[@]}"; do
-    pkill -9 -x "$p" 2>/dev/null || true
-done
-
-pkill -9 -f 'SteamVR/bin/vrstartup.sh' 2>/dev/null || true
+killall -9 vrserver vrmonitor vrcompositor vrdashboard vrwebhelper 2>/dev/null
 echo "VR environment successfully cleared."
+
+# 2. THE STEAM PIPE BYPASS
+# Shoot the launch command straight into Steam's background listener
+if [ -p "$HOME/.steam/steam.pipe" ]; then
+    echo "steam://rungameid/250820" > "$HOME/.steam/steam.pipe"
+    echo "🚀 SteamVR launch command piped successfully!"
+else
+    echo "❌ Error: steam.pipe not found. Is Steam running?"
+fi
