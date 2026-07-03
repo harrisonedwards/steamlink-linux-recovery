@@ -6,10 +6,7 @@ This is just an itty-bitty band-aid born of the frustration of Steam Link discon
 
 
 ---
-
 ⚠️ **Systemd Heads-Up:** Running the installer hooks a lightweight, user-level background daemon (`systemd --user`) on your machine that listens locally on port `8082`. It requires **zero root/sudo permissions**, but if you don't want a persistent background task running, skip the installer and just bind a keyboard hotkey directly to `bin/reset-vr`.
-
-
 
 ## Installation
 
@@ -31,9 +28,9 @@ systemctl --user status vr-trigger.service
 ## Wireless Quest 3 Setup
 
 1. Put on your Meta Quest headset and open the **Meta Horizon Browser**.
-2. Determine your computer's internal network IP address (e.g., `192.168.0.XXX`) and navigate to:
-```text
-http://<YOUR_PC_IP>:8082/reset
+2. Look at the final output block printed by the `install.sh` script on your PC. Navigate directly to that automatically generated address:
+```
+http://<YOUR_DETECTED_IP>:8082/reset
 ```
 3. Once the stylized verification screen displays, open the browser options and select **Add page to library**.
 4. Drag and drop the newly created app icon directly onto your universal bottom navigation dock for instant access.
@@ -55,19 +52,15 @@ If you want to completely purge this utility from your machine, just run this bl
 ```bash
 
 # Stop and disable the background web daemon
-
 systemctl --user disable --now vr-trigger.service
 
 # Delete the systemd user profile
-
 rm -f "$HOME/.config/systemd/user/vr-trigger.service"
 
 # Reload systemd to finalize the removal
-
 systemctl --user daemon-reload
 
 # Wipe the local binaries
-
 rm -f "$HOME/.local/bin/reset-vr" "$HOME/.local/bin/vr-web-trigger.py"
 
 echo "🧹 Everything is completely wiped!"

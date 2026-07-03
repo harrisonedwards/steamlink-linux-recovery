@@ -28,8 +28,19 @@ systemctl --user enable --now vr-trigger.service
 # Automatically grab the primary active local IP address
 LOCAL_IP=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \K\S+' || hostname -I | awk '{print $1}')
 
-echo "🚀 Installation successful!"
-echo "-------------------------------------------------------"
-echo "Your local IP configuration detected: $LOCAL_IP"
-echo "-------------------------------------------------------"
-echo "Point your Meta Quest browser to: http://$LOCAL_IP:8082/reset"
+# Automatically grab the primary active local IP address
+LOCAL_IP=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \K\S+' || hostname -I | awk '{print $1}')
+
+echo ""
+echo "======================================================="
+echo "🎉       INSTALLATION COMPLETELY SUCCESSFUL!        🎉"
+echo "======================================================="
+echo ""
+echo "  The background recovery daemon is running perfectly.   "
+echo "  Put on your headset, open the Horizon Browser, and     "
+echo "  navigate directly to this generated URL:               "
+echo ""
+echo "  👉   http://$LOCAL_IP:8082/reset   👈"
+echo ""
+echo "======================================================="
+echo ""
