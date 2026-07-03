@@ -1,9 +1,19 @@
 # Steam Link VR Boundary Recovery Utility for Linux
-
 This is just an itty-bitty band-aid born of the frustration of Steam Link disconnecting, and failing to reconnect if you step outside of your boundary for literally 5 seconds. On the Quest, it is possible (via developer settings) to remove the boundary entirely, but there are still situations where you accidentally disconnect. **In short**, this adds a shortcut within your quest directory that will remotely restart SteamVR. When it drops, you can click it, wait a few seconds, and open Steam Link to reconnect ***without walking back to your pc***.
 
 <sub>*It is, ahem... mostly vibecoded, because I just wanted to play my danged vidyas.* 🤷‍♂️💻</sub>
 
+---
+If you trip your Quest 3 guardian boundary or trigger passthrough while playing PCVR on Linux, Steam Link will abruptly drop the connection, leaving you staring at this error screen inside your headset:
+
+![Steam Link Disconnect Error](images/dc-reconnect.png)
+
+### 🔍 Anatomy of the Freeze & Fix
+
+* 🔴 **The Foreground Problem:** The large **"Host not responding"** error box (Error 450) is blocking your view. Normally, this zombie state forces you to take off the headset and physically walk to your PC to restart SteamVR.
+* 🟢 **The Background Solution:** Tapping a pinned bookmark hits `http://<YOUR_PC_IP>:8082/reset`, flushes the zombie processes in the background, and displays **"PIPELINE RESET COMPLETE."**
+
+Once it flashes green, you just tap **Exit**, reopen Steam Link, and reconnect. You're back in your game in 5 seconds without ever leaving your play space.
 
 ---
 ⚠️ **Systemd Heads-Up:** Running the installer hooks a lightweight, user-level background daemon (`systemd --user`) on your machine that listens locally on port `8082`. It requires **zero root/sudo permissions**, but if you don't want a persistent background task running, skip the installer and just bind a keyboard hotkey directly to `bin/reset-vr`.
@@ -50,7 +60,6 @@ This utility directly addresses and bridges several upstream runtime limitations
 If you want to completely purge this utility from your machine, just run this block in your terminal:
 
 ```bash
-
 # Stop and disable the background web daemon
 systemctl --user disable --now vr-trigger.service
 
@@ -62,8 +71,6 @@ systemctl --user daemon-reload
 
 # Wipe the local binaries
 rm -f "$HOME/.local/bin/reset-vr" "$HOME/.local/bin/vr-web-trigger.py"
-
-echo "🧹 Everything is completely wiped!"
 ```
 
 ## Credits & Attribution
